@@ -1,24 +1,23 @@
 package com.kstu.sport.persistence.dto;
 
-import javax.persistence.Column;
+public class AccountDto extends LongIdEntityDto {
 
-public class AccountDto {
+    private String username;
 
-    @Column(name = "login",nullable = false)
-    private String login;
-
-    @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(name = "email",nullable = false)
     private String email;
 
-    public String getLogin() {
-        return login;
+    private String firstName;
+
+    private String middleName;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -35,5 +34,21 @@ public class AccountDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 }
