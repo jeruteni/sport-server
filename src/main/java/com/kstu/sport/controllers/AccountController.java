@@ -28,7 +28,6 @@ public class AccountController {
     }
 
     @PostMapping(path = "/register")
-    @ResponseStatus(HttpStatus.OK)
     public HttpStatus register(@RequestBody AccountDto accountDto, HttpServletRequest request) {
         accountService.register(accountDto);
         return HttpStatus.OK;
