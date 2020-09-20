@@ -15,7 +15,7 @@ public interface AccountService {
 
     Account findByEmail(String email);
 
-    void register(AccountDto accountDto);
+    Long register(AccountDto accountDto);
 
     boolean checkAccountForExistsByEmail(String email);
 }

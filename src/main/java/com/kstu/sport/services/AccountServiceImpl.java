@@ -65,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void register(AccountDto accountDto) {
+    public Long register(AccountDto accountDto) {
         boolean isAccountExist = checkAccountForExistsByEmail(accountDto.getEmail());
         if (isAccountExist)
             throw new IllegalArgumentException("There is an account with that email address:" + accountDto.getEmail());
@@ -82,6 +82,8 @@ public class AccountServiceImpl implements AccountService {
 
 
         accountDao.save(account);
+
+        return account.getId();
     }
 
     @Override
