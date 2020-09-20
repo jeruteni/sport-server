@@ -12,4 +12,6 @@ public class TeamSportEventDto extends SportEventDto {
 
     private List <String> firstTeamLineUp;
     private List <String> secondTeamLineUp;
+
+    private Long customerId;
 }

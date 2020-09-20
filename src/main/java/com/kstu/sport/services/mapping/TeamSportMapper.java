@@ -1,5 +1,6 @@
 package com.kstu.sport.services.mapping;
 
+import com.kstu.sport.persistence.dao.CustomerRepository;
 import com.kstu.sport.persistence.dao.SportsCategoryRepository;
 import com.kstu.sport.persistence.domain.TeamSportEvent;
 import com.kstu.sport.persistence.dto.TeamSportEventDto;
@@ -13,6 +14,8 @@ public class TeamSportMapper {
 
     @Autowired
     SportsCategoryRepository sportsCategoryRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
     public TeamSportEvent mapToEntity(TeamSportEventDto teamSportEventDto){
 
@@ -26,6 +29,7 @@ public class TeamSportMapper {
         teamSportEvent.setAudienceCount(teamSportEventDto.getAudienceCount());
         teamSportEvent.setSportsCategory(sportsCategoryRepository.findByCategoryId(teamSportEventDto.getSportsCategoryID()));
         teamSportEvent.setCity(teamSportEventDto.getCity());
+        teamSportEvent.setCustomer(customerRepository.getOne(teamSportEventDto.getCustomerId()));
 
         return teamSportEvent;
     }
@@ -42,6 +46,7 @@ public class TeamSportMapper {
         teamSportEventDto.setAudienceCount(teamSportEvent.getAudienceCount());
         teamSportEventDto.setCity(teamSportEvent.getCity());
         teamSportEventDto.setSportsCategoryID(teamSportEvent.getSportsCategory().getCategoryId());
+        teamSportEventDto.setCustomerId(teamSportEvent.getCustomer().getId());
 
         return teamSportEventDto;
     }
