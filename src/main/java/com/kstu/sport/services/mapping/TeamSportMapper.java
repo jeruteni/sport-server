@@ -1,4 +1,4 @@
-package com.kstu.sport.services;
+package com.kstu.sport.services.mapping;
 
 import com.kstu.sport.persistence.dao.SportsCategoryRepository;
 import com.kstu.sport.persistence.domain.TeamSportEvent;

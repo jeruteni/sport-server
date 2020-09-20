@@ -5,6 +5,7 @@ import com.kstu.sport.persistence.domain.Account;
 import com.kstu.sport.persistence.dto.AccountDto;
 import com.kstu.sport.persistence.dto.JwtAccountDto;
 import com.kstu.sport.persistence.enums.AccountRole;
+import com.kstu.sport.services.mapping.AccountMapper;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

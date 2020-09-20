@@ -1,8 +1,10 @@
 package com.kstu.sport.spring.loader;
 
 import com.kstu.sport.persistence.dao.AccountRepository;
+import com.kstu.sport.persistence.dao.CityRepository;
 import com.kstu.sport.persistence.dao.SportsCategoryRepository;
 import com.kstu.sport.persistence.domain.Account;
+import com.kstu.sport.persistence.domain.City;
 import com.kstu.sport.persistence.domain.SportsCategory;
 import com.kstu.sport.persistence.enums.AccountRole;
 import org.apache.commons.collections4.SetUtils;
@@ -13,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -24,24 +29,43 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    SportsCategoryRepository sportsCategoryRepository;
+    private SportsCategoryRepository sportsCategoryRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         // Админ admin@yandex.ru admin
-        createAccountIfNotFound("admin@yandex.ru","admin","Админ",
-                "Админович","admin", SetUtils.hashSet(AccountRole.ADMIN));
+        createAccountIfNotFound("admin@yandex.ru", "admin", "Админ",
+                "Админович", "admin", SetUtils.hashSet(AccountRole.ADMIN));
 
         // Юзер user@yandex.ru user
-        createAccountIfNotFound("user@yandex.ru","user","Юзер",
-                "Юзерович","user", SetUtils.hashSet(AccountRole.USER));
+        createAccountIfNotFound("user@yandex.ru", "user", "Юзер",
+                "Юзерович", "user", SetUtils.hashSet(AccountRole.USER));
 
         // Организатор organizer@yandex.ru organizer
-        createAccountIfNotFound("organizer@yandex.ru","organizer","Организатор",
-                "Организаторович","organizer", SetUtils.hashSet(AccountRole.ORGANIZER));
+        createAccountIfNotFound("organizer@yandex.ru", "organizer", "Организатор",
+                "Организаторович", "organizer", SetUtils.hashSet(AccountRole.ORGANIZER));
 
         fillSportCategoryRepo();
+
+        fillCitiesRepo();
+
+
+    }
+
+    private void fillCitiesRepo() {
+        List<String> cities = Arrays.asList("Казань","Москва","Альметьевск","Киев","Ульяновск","Санкт-Петербург");
+        cities.stream().filter(c -> !cityRepository.existsByCaption(c)).forEach(this::saveCity);
+    }
+
+    @Transactional
+    void saveCity(String caption) {
+        City city = new City();
+        city.setCaption(caption);
+        cityRepository.save(city);
     }
 
     private void fillSportCategoryRepo() {
@@ -49,9 +73,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         String sportsCategoryList = "Football,Hockey,Basketball,Volleyball,Tennis,Swimming,Gymnastics,Box,Judo,Running";
         int counter = 0;
 
-        if(sportsCategoryRepository.count() == 0){
+        if (sportsCategoryRepository.count() == 0) {
 
-            for(String sport : sportsCategoryList.split(",")){
+            for (String sport : sportsCategoryList.split(",")) {
 
                 SportsCategory sportsCategory = new SportsCategory();
                 sportsCategory.setCaption(sport);

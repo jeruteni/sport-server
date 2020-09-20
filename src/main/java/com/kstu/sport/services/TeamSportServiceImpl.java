@@ -3,6 +3,7 @@ package com.kstu.sport.services;
 import com.kstu.sport.persistence.dao.TeamSportEventRepository;
 import com.kstu.sport.persistence.domain.TeamSportEvent;
 import com.kstu.sport.persistence.dto.TeamSportEventDto;
+import com.kstu.sport.services.mapping.TeamSportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
