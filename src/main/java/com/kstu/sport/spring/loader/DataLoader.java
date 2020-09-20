@@ -3,9 +3,8 @@ package com.kstu.sport.spring.loader;
 import com.kstu.sport.persistence.dao.AccountRepository;
 import com.kstu.sport.persistence.dao.CityRepository;
 import com.kstu.sport.persistence.dao.SportsCategoryRepository;
-import com.kstu.sport.persistence.domain.Account;
-import com.kstu.sport.persistence.domain.City;
-import com.kstu.sport.persistence.domain.SportsCategory;
+import com.kstu.sport.persistence.dao.SportsComplexRepository;
+import com.kstu.sport.persistence.domain.*;
 import com.kstu.sport.persistence.enums.AccountRole;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +32,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
     private CityRepository cityRepository;
+
+    @Autowired
+    private SportsComplexRepository sportsComplexRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -53,11 +55,19 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         fillCitiesRepo();
 
+        createSportsComplexIfNotFound("Культурно-спортивный комплекс Уникс","ул. Профессора Нужина, 2/27",
+                "+7 (843) 238-20-67",new GeoPoint(new BigDecimal("55.47"),new BigDecimal("49.06")),
+                cityRepository.findByCaption("Казань"));
+
+        createSportsComplexIfNotFound("Ак Барс Арена","просп. Ямашева, 115А, Казань",
+                "+7 (843) 245-34-34",new GeoPoint(new BigDecimal("55.47"),new BigDecimal("50.06")),
+                cityRepository.findByCaption("Казань"));
+
 
     }
 
     private void fillCitiesRepo() {
-        List<String> cities = Arrays.asList("Казань","Москва","Альметьевск","Киев","Ульяновск","Санкт-Петербург");
+        List<String> cities = Arrays.asList("Казань", "Москва", "Альметьевск", "Киев", "Ульяновск", "Санкт-Петербург");
         cities.stream().filter(c -> !cityRepository.existsByCaption(c)).forEach(this::saveCity);
     }
 
@@ -114,6 +124,33 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         account.setEnabled(true);
         account = accountRepository.save(account);
         return account;
+    }
+
+    private void createSportsComplexIfNotFound(String caption, String address, String phoneNumber,
+                                               GeoPoint geoPoint, City city) {
+        Long count = sportsComplexRepository.countByCaption(caption);
+        if (count == 0) {
+            SportsComplex sportsComplex = new SportsComplex();
+
+            sportsComplex.setCaption(
+                    caption
+            );
+            sportsComplex.setAddress(
+                    address
+            );
+            sportsComplex.setPhoneNumber(
+                    phoneNumber
+            );
+            sportsComplex.setGeoPoint(
+                    geoPoint
+            );
+            sportsComplex.setCity(
+                    city
+            );
+            sportsComplexRepository.save(sportsComplex);
+        }
+
+
     }
 
 }

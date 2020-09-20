@@ -15,7 +15,7 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @GetMapping("city/fetchAll")
+    @GetMapping("/city/fetchAll")
     public List<CityDto> fetchAll() {
         return cityService.fetchAllCities();
     }

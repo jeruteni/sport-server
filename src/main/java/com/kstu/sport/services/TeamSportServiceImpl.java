@@ -6,6 +6,7 @@ import com.kstu.sport.persistence.dto.TeamSportEventDto;
 import com.kstu.sport.services.mapping.TeamSportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class TeamSportServiceImpl implements TeamSportService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TeamSportEventDto> getTeamSportEventList() {
 
         List <TeamSportEvent> teamSportEventList = teamSportEventRepository.findAll();
