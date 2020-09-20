@@ -23,4 +23,21 @@ public class CategoryMapper {
         return categoryDto;
 
     }
+
+    public SportsCategory mapToEntity(CategoryDto categoryDto) {
+        SportsCategory sportsCategory = new SportsCategory();
+
+        sportsCategory.setId(
+                categoryDto.getId()
+        );
+        sportsCategory.setCaption(
+                categoryDto.getCaption()
+        );
+        sportsCategory.setCategoryId(
+                categoryDto.getCategoryId()
+        );
+
+        return sportsCategory;
+
+    }
 }

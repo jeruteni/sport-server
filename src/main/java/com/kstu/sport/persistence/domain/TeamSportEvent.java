@@ -24,7 +24,7 @@ public class TeamSportEvent extends SportEvent {
     @ElementCollection(targetClass = String.class)
     private List<String> secondTeamLineUp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
