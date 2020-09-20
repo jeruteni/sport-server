@@ -1,7 +1,9 @@
 package com.kstu.sport.spring.loader;
 
 import com.kstu.sport.persistence.dao.AccountRepository;
+import com.kstu.sport.persistence.dao.SportsCategoryRepository;
 import com.kstu.sport.persistence.domain.Account;
+import com.kstu.sport.persistence.domain.SportsCategory;
 import com.kstu.sport.persistence.enums.AccountRole;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    SportsCategoryRepository sportsCategoryRepository;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
@@ -36,6 +41,27 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         createAccountIfNotFound("organizer@yandex.ru","organizer","Организатор",
                 "Организаторович","organizer", SetUtils.hashSet(AccountRole.ORGANIZER));
 
+        fillSportCategoryRepo();
+    }
+
+    private void fillSportCategoryRepo() {
+
+        String sportsCategoryList = "Football,Hockey,Basketball,Volleyball,Tennis,Swimming,Gymnastics,Box,Judo,Running";
+        int counter = 0;
+
+        if(sportsCategoryRepository.count() == 0){
+
+            for(String sport : sportsCategoryList.split(",")){
+
+                SportsCategory sportsCategory = new SportsCategory();
+                sportsCategory.setCaption(sport);
+                sportsCategory.setCategoryId(counter);
+
+                sportsCategoryRepository.save(sportsCategory);
+                counter++;
+            }
+
+        }
     }
 
     @Transactional
