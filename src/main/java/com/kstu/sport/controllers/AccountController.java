@@ -28,8 +28,9 @@ public class AccountController {
     }
 
     @PostMapping(path = "/register")
-    public HttpStatus register(@RequestBody AccountDto accountDto, HttpServletRequest request) {
-        accountService.register(accountDto);
-        return HttpStatus.OK;
+    public Long register(@RequestBody AccountDto accountDto, HttpServletRequest request) {
+      long accountId =  accountService.register(accountDto);
+      return accountId;
+
     }
 }
