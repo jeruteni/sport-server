@@ -2,10 +2,7 @@ package com.kstu.sport.persistence.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -26,5 +23,9 @@ public class TeamSportEvent extends SportEvent {
     @Column(name = "secondTeamLineUp")
     @ElementCollection(targetClass = String.class)
     private List<String> secondTeamLineUp;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
 }
