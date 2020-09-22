@@ -130,7 +130,7 @@ public class EventController {
 
     }
 
-    @GetMapping("events/findById")
+    @GetMapping("/events/findById")
     public EventProfileDto getEventById(@RequestParam(name = "eventId") Long eventId) {
 
         Optional<Event> byId = eventRepository.findById(eventId);

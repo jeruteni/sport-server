@@ -96,7 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //              .antMatchers("/a/registrationConfirm").permitAll()
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/account/preferences").permitAll()
-                .antMatchers("/geoTest").permitAll()
+                .antMatchers("/events/findById").permitAll()
+                .antMatchers("/events/fetchAll").permitAll()
 
                 .anyRequest().authenticated()
 
