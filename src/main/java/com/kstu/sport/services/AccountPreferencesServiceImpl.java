@@ -37,11 +37,13 @@ public class AccountPreferencesServiceImpl implements AccountPreferencesService 
         }
 
         preferencesSportCategoryList.stream().map(CategoryDto::getId).forEach(item -> {
-            AccountPreferences accountPreferences = new AccountPreferences();
-            accountPreferences.setAccount(optionalAccount.get());
-            accountPreferences.setSportsCategory(categoryRepository.findByCategoryId(item).get());
-
-            accountPreferencesRepository.save(accountPreferences);
+            Long count = accountPreferencesRepository.countAccountPreferencesByAccountIdAndSportsCategoryId(optionalAccount.get().getId(),item);
+            if (count == 0) {
+                AccountPreferences accountPreferences = new AccountPreferences();
+                accountPreferences.setAccount(optionalAccount.get());
+                accountPreferences.setSportsCategory(categoryRepository.findByCategoryId(item).get());
+                accountPreferencesRepository.save(accountPreferences);
+            }
         });
 
     }

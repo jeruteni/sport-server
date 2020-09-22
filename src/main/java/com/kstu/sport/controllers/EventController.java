@@ -1,19 +1,25 @@
 package com.kstu.sport.controllers;
 
+import com.kstu.sport.persistence.dao.AccountPreferencesRepository;
 import com.kstu.sport.persistence.dao.CategoryRepository;
 import com.kstu.sport.persistence.dao.EventRepository;
 import com.kstu.sport.persistence.dao.SportsComplexRepository;
+import com.kstu.sport.persistence.domain.AccountPreferences;
 import com.kstu.sport.persistence.domain.Event;
 import com.kstu.sport.persistence.domain.SportsCategory;
 import com.kstu.sport.persistence.domain.SportsComplex;
 import com.kstu.sport.persistence.dto.EventDto;
 import com.kstu.sport.persistence.dto.EventProfileDto;
+import com.kstu.sport.services.MailService;
+import com.kstu.sport.services.mail.MailSender;
 import com.kstu.sport.services.mapping.CategoryMapper;
 import com.kstu.sport.services.mapping.SportsComplexMapper;
+import com.kstu.sport.util.Constraints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,6 +41,9 @@ public class EventController {
 
     @Autowired
     private SportsComplexMapper sportsComplexMapper;
+
+    @Autowired
+    private MailService mailService;
 
 
     @PostMapping("events/saveStepOne")
@@ -116,6 +125,9 @@ public class EventController {
         );
 
         eventRepository.save(event);
+
+        mailService.mailingPreferences(event);
+
     }
 
     @GetMapping("events/findById")
@@ -172,12 +184,12 @@ public class EventController {
         if (event.getSportsCategory() != null) {
             eventProfileDto.setCategoryDto(
                     categoryMapper.mapToDto(event.getSportsCategory())
-        );
+            );
         }
 
         if (event.getSportsComplex() != null) {
             eventProfileDto.setSportsComplexDto(
-                sportsComplexMapper.mapToDto(event.getSportsComplex())
+                    sportsComplexMapper.mapToDto(event.getSportsComplex())
             );
         }
 
