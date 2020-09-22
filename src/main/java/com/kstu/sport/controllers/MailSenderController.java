@@ -9,13 +9,12 @@ import com.kstu.sport.persistence.domain.SingleSportEvent;
 import com.kstu.sport.persistence.domain.TeamSportEvent;
 import com.kstu.sport.persistence.dto.MailMessageDto;
 import com.kstu.sport.services.mail.MailSender;
-import javafx.concurrent.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +23,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-@RestController
+@RestController("senderController")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class MailSenderController {
 
     @Autowired
