@@ -51,7 +51,7 @@ public class EventController {
     public Long saveStepOne(@RequestBody EventDto eventDto) {
         Event event = new Event();
 
-        Optional<Account> account = accountRepository.findById(eventDto.getId());
+        Optional<Account> account = accountRepository.findById(eventDto.getAccountId() );
 
         if (!account.isPresent()) {
             throw new IllegalArgumentException("Пользователя с таким id не найден");
