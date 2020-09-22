@@ -161,8 +161,8 @@ public class EventController {
     private EventProfileDto mapToDto(Event event) {
         EventProfileDto eventProfileDto = new EventProfileDto();
 
-        eventProfileDto.setAccountDto(
-                accountMapper.mapToDto(event.getAccount())
+        eventProfileDto.setAccountId(
+                event.getAccount().getId()
         );
         eventProfileDto.setId(
                 event.getId()

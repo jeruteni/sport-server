@@ -3,7 +3,7 @@ package com.kstu.sport.persistence.dto;
 
 public class EventProfileDto extends LongIdEntityDto {
 
-    private AccountDto accountDto;
+    private Long accountId;
 
     private String eventDate;
 
@@ -27,12 +27,12 @@ public class EventProfileDto extends LongIdEntityDto {
 
     private SportsComplexDto sportsComplexDto;
 
-    public AccountDto getAccountDto() {
-        return accountDto;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setAccountDto(AccountDto accountDto) {
-        this.accountDto = accountDto;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getEventDate() {
