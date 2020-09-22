@@ -46,6 +46,10 @@ public class Event extends LongIdEntity {
     @Column(name = "type")
     private Long type;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     public String getEventDate() {
         return eventDate;
     }
@@ -132,5 +136,13 @@ public class Event extends LongIdEntity {
 
     public void setType(Long type) {
         this.type = type;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

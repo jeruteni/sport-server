@@ -2,6 +2,8 @@ package com.kstu.sport.persistence.dto;
 
 public class EventDto extends LongIdEntityDto {
 
+    private Long accountId;
+
     private String eventDate;
 
     private String eventTime;
@@ -23,6 +25,14 @@ public class EventDto extends LongIdEntityDto {
     private Long place;
 
     private Long type;
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
 
     public String getEventDate() {
         return eventDate;

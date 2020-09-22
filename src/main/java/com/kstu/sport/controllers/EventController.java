@@ -1,17 +1,12 @@
 package com.kstu.sport.controllers;
 
-import com.kstu.sport.persistence.dao.AccountPreferencesRepository;
-import com.kstu.sport.persistence.dao.CategoryRepository;
-import com.kstu.sport.persistence.dao.EventRepository;
-import com.kstu.sport.persistence.dao.SportsComplexRepository;
-import com.kstu.sport.persistence.domain.AccountPreferences;
-import com.kstu.sport.persistence.domain.Event;
-import com.kstu.sport.persistence.domain.SportsCategory;
-import com.kstu.sport.persistence.domain.SportsComplex;
+import com.kstu.sport.persistence.dao.*;
+import com.kstu.sport.persistence.domain.*;
 import com.kstu.sport.persistence.dto.EventDto;
 import com.kstu.sport.persistence.dto.EventProfileDto;
 import com.kstu.sport.services.MailService;
 import com.kstu.sport.services.mail.MailSender;
+import com.kstu.sport.services.mapping.AccountMapper;
 import com.kstu.sport.services.mapping.CategoryMapper;
 import com.kstu.sport.services.mapping.SportsComplexMapper;
 import com.kstu.sport.util.Constraints;
@@ -26,6 +21,12 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class EventController {
+
+    @Autowired
+    private AccountMapper accountMapper;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -49,6 +50,13 @@ public class EventController {
     @PostMapping("events/saveStepOne")
     public Long saveStepOne(@RequestBody EventDto eventDto) {
         Event event = new Event();
+
+        Optional<Account> account = accountRepository.findById(eventDto.getId());
+
+        if (!account.isPresent()) {
+            throw new IllegalArgumentException("Пользователя с таким id не найден");
+        }
+
 
         Optional<SportsComplex> complex = sportsComplexRepository.findById(eventDto.getComplex());
 
@@ -74,6 +82,9 @@ public class EventController {
         );
         event.setEventTime(
                 eventDto.getEventTime()
+        );
+        event.setAccount(
+                account.get()
         );
 
         eventRepository.save(event);
@@ -150,6 +161,9 @@ public class EventController {
     private EventProfileDto mapToDto(Event event) {
         EventProfileDto eventProfileDto = new EventProfileDto();
 
+        eventProfileDto.setAccountDto(
+                accountMapper.mapToDto(event.getAccount())
+        );
         eventProfileDto.setId(
                 event.getId()
         );
