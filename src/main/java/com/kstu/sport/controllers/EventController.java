@@ -126,7 +126,7 @@ public class EventController {
 
         eventRepository.save(event);
 
-        mailService.mailingPreferences(event);
+        //mailService.mailingPreferences(event);
 
     }
 
