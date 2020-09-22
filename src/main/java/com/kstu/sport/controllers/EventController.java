@@ -81,7 +81,7 @@ public class EventController {
         eventRepository.save(event.get());
     }
 
-    @PostMapping
+    @PostMapping("events/saveStepThree")
     public void saveStepThree(@RequestBody EventDto eventDto) {
         Optional<Event> eventOptional = eventRepository.findById(eventDto.getId());
 
