@@ -2,15 +2,15 @@ package com.kstu.sport.persistence.dto;
 
 public class CategoryDto extends LongIdEntityDto {
 
-    private int categoryId;
+    private Long categoryId;
 
     private String caption;
 
-    public int getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

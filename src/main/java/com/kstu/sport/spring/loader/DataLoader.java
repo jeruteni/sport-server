@@ -81,7 +81,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private void fillSportCategoryRepo() {
 
         String sportsCategoryList = "Football,Hockey,Basketball,Volleyball,Tennis,Swimming,Gymnastics,Box,Judo,Running";
-        int counter = 0;
+        long counter = 0;
 
         if (sportsCategoryRepository.count() == 0) {
 

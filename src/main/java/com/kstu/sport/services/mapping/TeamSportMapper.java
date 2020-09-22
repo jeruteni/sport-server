@@ -45,7 +45,7 @@ public class TeamSportMapper {
         teamSportEventDto.setName(teamSportEvent.getName());
         teamSportEventDto.setAudienceCount(teamSportEvent.getAudienceCount());
         teamSportEventDto.setCity(teamSportEvent.getCity());
-        teamSportEventDto.setSportsCategoryID(teamSportEvent.getSportsCategory().getCategoryId());
+        //teamSportEventDto.setSportsCategoryID(teamSportEvent.getSportsCategory().getCategoryId());
         teamSportEventDto.setCustomerId(teamSportEvent.getCustomer().getId());
 
         return teamSportEventDto;

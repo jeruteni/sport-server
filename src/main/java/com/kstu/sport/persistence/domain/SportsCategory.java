@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class SportsCategory extends LongIdEntity{
 
     @Column(name = "categoryId",nullable = false)
-    private int categoryId;
+    private Long categoryId;
 
     @Column(name = "caption",nullable = false)
     private String caption;

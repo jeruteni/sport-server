@@ -38,7 +38,7 @@ public class SingleSportMapper {
         singleSportEventDto.setAudienceCount(singleSportEvent.getAudienceCount());
         singleSportEventDto.setCity(singleSportEvent.getCity());
         singleSportEventDto.setName(singleSportEvent.getName());
-        singleSportEventDto.setSportsCategoryID(singleSportEvent.getSportsCategory().getCategoryId());
+        //singleSportEventDto.setSportsCategoryID(singleSportEvent.getSportsCategory().getCategoryId());
         singleSportEventDto.setCustomerId(singleSportEvent.getCustomer().getId());
 
         return singleSportEventDto;
