@@ -15,7 +15,7 @@ public class AccountPreferenceController {
     @Autowired
     private AccountPreferencesService accountPreferencesService;
 
-    @PostMapping("account/preferences")
+    @PostMapping("/account/preferences")
     public void savePreferences(@RequestBody AccountPreferenceDto accountPreferenceDto) {
         accountPreferencesService.savePreferences(accountPreferenceDto.getAccountId()
                 ,accountPreferenceDto.getSportCategories());

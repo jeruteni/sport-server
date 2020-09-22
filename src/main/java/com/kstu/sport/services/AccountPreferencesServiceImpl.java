@@ -2,6 +2,7 @@ package com.kstu.sport.services;
 
 import com.kstu.sport.persistence.dao.AccountPreferencesRepository;
 import com.kstu.sport.persistence.dao.AccountRepository;
+import com.kstu.sport.persistence.dao.CategoryRepository;
 import com.kstu.sport.persistence.domain.Account;
 import com.kstu.sport.persistence.domain.AccountPreferences;
 import com.kstu.sport.persistence.dto.CategoryDto;
@@ -24,6 +25,9 @@ public class AccountPreferencesServiceImpl implements AccountPreferencesService 
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void savePreferences(Long id, List<CategoryDto> preferencesSportCategoryList) {
         Optional<Account> optionalAccount = accountRepository.findById(id);
@@ -32,10 +36,10 @@ public class AccountPreferencesServiceImpl implements AccountPreferencesService 
             throw new IllegalArgumentException("id is not valid");
         }
 
-        preferencesSportCategoryList.stream().map(c -> categoryMapper.mapToEntity(c)).forEach(item -> {
+        preferencesSportCategoryList.stream().map(CategoryDto::getId).forEach(item -> {
             AccountPreferences accountPreferences = new AccountPreferences();
             accountPreferences.setAccount(optionalAccount.get());
-            accountPreferences.setSportsCategory(item);
+            accountPreferences.setSportsCategory(categoryRepository.findByCategoryId(item).get());
 
             accountPreferencesRepository.save(accountPreferences);
         });
